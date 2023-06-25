@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>仿网易云音乐</title>
+    <link rel="stylesheet" href="./css/reset.min.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="the-header">
+        <div class="header-left">
+          <img src="" alt="用户头像" />
+          <div>评论内容</div>
+        </div>
+        <div class="header-right">打开看看 ></div>
+      </header>
+      <main class="the-main">
+        <div class="main-player">
+          <div class="background-disc">
+            <img src="" alt="歌曲图片" />
+          </div>
+          <div class="music-player"></div>
+        </div>
+        <h2 class="main-title">歌词标题</h2>
+        <div class="main-content">
+          <div class="content-box">
+            <p class="active">第一行内容</p>
+            <p class="active">第二行内容</p>
+            <p>第三行内容</p>
+            <p>第四行内容</p>
+          </div>
+        </div>
+        <div class="main-footer">
+          <div class="url-button the-button-1">唱这首歌 ></div>
+          <div class="the-line">|</div>
+          <div class="url-button the-button-2">一起听歌 ></div>
+        </div>
+      </main>
+      <footer class="the-footer">
+        <div class="footer-button footer-button-1">打开</div>
+        <div class="footer-button footer-button-2">下载</div>
+      </footer>
+
+      <div class="the-bar">
+        <span class="bar-time bar-current">00:00.000</span>
+        <div class="bar-progress">
+          <div class="bar-already"></div>
+        </div>
+        <span class="bar-time bar-duration">00:00.000</span>
+      </div>
+
+      <div class="the-mask"></div>
+      <div class="the-background"></div>
+      <audio class="the-audio" src="" controls preload="metadata"></audio>
+
+      <div class="loading-box">
+        <img src="./image/loading.gif" alt="" />
+        <span>奴家正在努力加载中...</span>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="./js/prefixfree.min.js">
+  // 处理css前缀兼容。
+</script>
+<script src="./js/fastclick.js"></script>
+
+<script>
+  //动态计算rem的换算比例。
+  (() => {
+    const app = document.querySelector("#app");
+    const HTML = document.documentElement;
+    const computed = function computed() {
+      // console.log(window.orientation);
+      let orien = Math.abs(window.orientation);
+      // 切换到横屏。
+      if (orien === 90) {
+        alert(`横屏体验不佳，请你切换到竖屏`);
+        app.style.display = "none";
+        return;
+      }
+
+      // 当前是竖屏。
+      app.style.display = "block";
+
+      // 计算rem的换算比例
+      let deviceW = HTML.clientWidth; //设备宽度
+      let designW = 375; //设计稿宽度
+      let initialRatio = 100; //初始比例。
+      // 超过540，也不会按照比例继续放大了。
+      if (deviceW > 540) {
+        deviceW = 540;
+      }
+      let currentRatio = (deviceW / designW) * initialRatio; //设备宽度。
+      HTML.style.fontSize = currentRatio + "px";
+    };
+    computed();
+    // window.addEventListener('orientationchange',computed)//横竖屏切换事件。
+    // 基于resize代替orientationchange事件：这样可以适配模拟器中，设备的切换场景。
+    window.addEventListener("resize", computed);
+  })();
+</script>
+
+<script src="./js/api.js"></script>
+<script src="./js/index.js"></script>
